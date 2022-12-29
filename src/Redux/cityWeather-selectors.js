@@ -1,2 +1,4 @@
-export const getVisibility = (state) => state.cityWeather.cities[0].visibility;
-export const getCityName = (state) => state.cityWeather.cities[0].name;
+// export const getWeatherData = (state, i) => i !== null ? state.cityWeather.cities[i] : state.cityWeather.cities;
+export const getCitiesWeatherData = (state) =>  state.cityWeather.cities;
+export const getCityWeatherData = (state) =>  state.cityWeather.city;
+

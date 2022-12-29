@@ -1,38 +1,43 @@
 import {connect} from "react-redux";
 import CityWeather from "./CityWeather";
 import React, {useEffect, useState} from "react";
-import {requestCityWeather} from "../../Redux/cityWeather-reducer";
+import {clearCitiesWeather, requestCityWeather} from "../../Redux/cityWeather-reducer";
 import {Preloader} from "../../common/Preloader";
-import {getCityName, getVisibility} from "../../Redux/cityWeather-selectors";
-import {getIsFetching} from "../../Redux/app-selectors";
+import {getCityWeatherData} from "../../Redux/cityWeather-selectors";
+import {getIsFetching, getUnit} from "../../Redux/app-selectors";
+import {clearFavoritesCities} from "../../Redux/favoritesCities-reducer";
 
 const CityWeatherContainer = (props) => {
 
-    useEffect(()=>{
+    useEffect(() => {
         const lat = '50.4333', lon = '30.5167';
-        const APIkey = 'b576b32c49d545641ea3b96c463ad641';
-        props.requestCityWeather(lat, lon, APIkey);
-    }, [props.visibility]);
+        props.requestCityWeather(lat, lon);
+
+        return () => {
+            props.clearFavoritesCities();
+            props.clearCitiesWeather();
+        };
+    }, [props.unit]);
 
 
-
-    if(props.isFetching){
-        return <Preloader />
+    if (props.isFetching || !props.weatherData) {
+        return <Preloader/>
     }
 
     return (
         <CityWeather
-            visibility={props.visibility}
-            name={props.name}
-            // isFetching={props.isFetching}
+            weatherData={props.weatherData}
+            unit={props.unit}
         />
     );
 }
 
 const mstp = (state) => ({
-    visibility: getVisibility(state),
-    name: getCityName(state),
     isFetching: getIsFetching(state),
+    weatherData: getCityWeatherData(state),
+    unit: getUnit(state),
 })
 
-export default connect(mstp, {requestCityWeather})(CityWeatherContainer);
+export default connect(mstp, {
+    requestCityWeather, clearFavoritesCities, clearCitiesWeather
+})(CityWeatherContainer);
