@@ -1,16 +1,5 @@
 import {LocalStorageAPI} from "../api/api";
-
-// action types
-const ADD_FAVORITE = 'favoritesCities/ADD_FAVORITE';
-const DELETE_FAVORITE = 'favoritesCities/DELETE_FAVORITE';
-const SET_FAVORITES = 'favoritesCities/SET_FAVORITES';
-const CLEAR_FAVORITES = 'favoritesCities/CLEAR_FAVORITES';
-
-//action creators
-export const addFavorite = (cityCoordinate) => ({type: ADD_FAVORITE, cityCoordinate});
-export const deleteFavorite = (cityCoordinate) => ({type: DELETE_FAVORITE, cityCoordinate});
-export const setFavoritesCities = (favCities) => ({type: SET_FAVORITES, favCities});
-export const clearFavoritesCities = () => ({type: CLEAR_FAVORITES});
+import {createSlice} from "@reduxjs/toolkit";
 
 // thunk creators
 export const addFavoriteCityRequest = (cityCoordinate) => (dispatch) => {
@@ -29,29 +18,24 @@ const initialState = {
     favoritesCities: []
 }
 
-export const favoritesCitiesReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_FAVORITE:
-            return {
-                ...state,
-                favoritesCities: [...state.favoritesCities, ...action.cityCoordinate]
-            }
-        case DELETE_FAVORITE:
-            return {
-                ...state,
-                favoritesCities: state.favoritesCities.filter(cord => cord !== action.cityCoordinate)
-            }
-        case SET_FAVORITES:
-            return {
-                ...state,
-                favoritesCities: [...action.favCities]
-            }
-        case CLEAR_FAVORITES:
-            return {
-                ...state,
-                favoritesCities: []
-            }
-        default :
-            return state
+const favoritesCitiesReducer = createSlice({
+    name: 'favoritesCities',
+    initialState,
+    reducers: {
+        addFavorite(state, action) {
+            state.favoritesCities.push(action.payload)
+        },
+        deleteFavorite(state, action) {
+            state.favoritesCities.filter(cord => cord !== action.payload)
+        },
+        setFavoritesCities(state, action) {
+            state.favoritesCities = action.payload
+        },
+        clearFavoritesCities(state) {
+            state.favoritesCities = []
+        }
     }
-}
+});
+
+export const {addFavorite, deleteFavorite, setFavoritesCities, clearFavoritesCities} = favoritesCitiesReducer.actions;
+export default favoritesCitiesReducer.reducer;

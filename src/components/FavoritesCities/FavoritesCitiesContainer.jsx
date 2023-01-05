@@ -20,29 +20,26 @@ const FavoritesCitiesContainer = (props) => {
 
     useEffect(() => {
         props.setFavoritesCitiesRequest();
-        props.favoritesCities.map(async c => {
-            let resp = await props.requestCitiesWeather(c);
+        props.favoritesCities.map(c => {
+            props.requestCitiesWeather(c);
         });
-
-
-        // let weatherResponses = [];         #2 variant
-        // weatherResponses = props.favoritesCities.map(async c => {
-        //     let resp = await props.requestCitiesWeather(c);
-        //     weatherResponses.push(resp);
-        // });
-        // props.setCitiesWeather(weatherResponses);
-
         return () => {
             props.clearFavoritesCities();
             props.clearCitiesWeather();
         };
-    }, [props.favoritesCities.length]);
+    }, [props.favoritesCities.length, props.unit]);
 
     if (props.isFetching) {
         return <Preloader/>
     }
 
-    return <FavoritesCities weatherData={props.weatherData} unit={props.unit}/>
+    return <FavoritesCities
+        weatherData={props.weatherData}
+        unit={props.unit}
+        favoritesCities={props.favoritesCities}
+        addFavoriteCityRequest={props.addFavoriteCityRequest}
+        deleteFavoriteCityRequest={props.deleteFavoriteCityRequest}
+    />
 }
 
 const mstp = (state) => ({
@@ -55,6 +52,6 @@ const mstp = (state) => ({
 export default connect(mstp, {
     setFavoritesCitiesRequest,
     deleteFavoriteCityRequest, addFavoriteCityRequest, requestCitiesWeather,
-    clearFavoritesCities, clearCitiesWeather, setCitiesWeather
+    clearFavoritesCities, clearCitiesWeather, setCitiesWeather,
 })(FavoritesCitiesContainer);
 

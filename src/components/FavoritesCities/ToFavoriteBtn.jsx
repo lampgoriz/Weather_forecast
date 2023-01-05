@@ -3,6 +3,7 @@ import React from "react";
 const ToFavoriteBtn = (props) => {
     const cord = `${props.lat},${props.lon}`;
 
+    //FIX: different coordinate values come in search response and favoritesCities response
     const checkFav = () => {
         let res;
         props.favoritesCities.map(city => {

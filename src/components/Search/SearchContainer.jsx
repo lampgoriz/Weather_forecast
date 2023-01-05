@@ -20,7 +20,7 @@ const SearchContainer = (props) => {
             props.clearFavoritesCities();
             props.clearCitiesWeather();
         };
-    }, [props.searchedCities, props.favoritesCities.length])
+    }, [props.favoritesCities.length])
 
     return (
         <Search
