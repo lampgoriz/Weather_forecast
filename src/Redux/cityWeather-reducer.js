@@ -24,7 +24,7 @@ export const requestCitiesWeather = createAsyncThunk(
 
 const initialState = {
     city: null,
-    cities: []
+    cities: {}
 }
 
 const cityWeatherReducer = createSlice({
@@ -40,7 +40,7 @@ const cityWeatherReducer = createSlice({
             state.city = action.payload
         },
         [requestCitiesWeather.fulfilled]: (state, action) => {
-            state.cities.push(action.payload)
+            state.cities[`${action.payload.coord.lat},${action.payload.coord.lon}`] = (action.payload)
         },
     }
 });

@@ -4,27 +4,28 @@ import style from './favoriteCities.module.css'
 
 const FavoritesCities = (props) => {
 
-    let cities;
-    if (props.weatherData && props.weatherData.length > 0) {
-        cities = props.weatherData.map(w => {
+    let cities = [];
+    if (props.weatherData) {
+        for (const city in props.weatherData) {
+            let key = props.weatherData[city];
             let weatherData = {
-                name: w.name,
-                country: w.sys.country,
-                temperature: w.main.temp,
-                feels_like: w.main.feels_like,
-                max: w.main.temp_max,
-                min: w.main.temp_min,
-                clouds: w.clouds.all,
-                lat: w.coord.lat,
-                lon: w.coord.lon,
+                name: key.name,
+                country: key.sys.country,
+                temperature: key.main.temp,
+                feels_like: key.main.feels_like,
+                max: key.main.temp_max,
+                min: key.main.temp_min,
+                clouds: key.clouds.all,
+                lat: key.coord.lat,
+                lon: key.coord.lon,
             }
 
-            return <CityWeather
-                key={w.id}
+            cities.push(<CityWeather
+                key={key.id}
                 weatherData={weatherData}
                 favoritesCities={props.favoritesCities}
-                unit={props.unit}/>
-        });
+                unit={props.unit}/>)
+        }
     }
 
     return (

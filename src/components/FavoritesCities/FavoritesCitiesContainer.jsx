@@ -23,10 +23,10 @@ const FavoritesCitiesContainer = (props) => {
         props.favoritesCities.map(c => {
             props.requestCitiesWeather(c);
         });
-        return () => {
-            props.clearFavoritesCities();
-            props.clearCitiesWeather();
-        };
+        // return () => {
+        //     props.clearFavoritesCities();
+        //     props.clearCitiesWeather();
+        // };
     }, [props.favoritesCities.length, props.unit]);
 
     if (props.isFetching) {

@@ -19,10 +19,10 @@ const CityWeatherContainer = (props) => {
         const lat = '50.4333', lon = '30.5167';
         props.requestCityWeather({lat, lon});
 
-        return () => {
-            props.clearFavoritesCities();
-            props.clearCitiesWeather();
-        };
+        // return () => {
+        //     props.clearFavoritesCities();
+        //     props.clearCitiesWeather();
+        // };
     }, [props.unit]);
 
 

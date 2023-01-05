@@ -16,10 +16,10 @@ const SearchContainer = (props) => {
     useEffect(() => {
         props.setFavoritesCitiesRequest();
 
-        return () => {
-            props.clearFavoritesCities();
-            props.clearCitiesWeather();
-        };
+        // return () => {
+        //     props.clearFavoritesCities();
+        //     props.clearCitiesWeather();
+        // };
     }, [props.favoritesCities.length])
 
     return (
