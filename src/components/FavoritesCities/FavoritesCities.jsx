@@ -7,6 +7,7 @@ const FavoritesCities = (props) => {
     let cities = [];
     if (props.weatherData) {
         for (const city in props.weatherData) {
+            // console.log(props.weatherData[city]);
             let key = props.weatherData[city];
             let weatherData = {
                 name: key.name,
@@ -16,15 +17,17 @@ const FavoritesCities = (props) => {
                 max: key.main.temp_max,
                 min: key.main.temp_min,
                 clouds: key.clouds.all,
-                lat: key.coord.lat,
-                lon: key.coord.lon,
+                coord: {lat: key.coord.lat, lon: key.coord.lon}
             }
 
             cities.push(<CityWeather
                 key={key.id}
                 weatherData={weatherData}
                 favoritesCities={props.favoritesCities}
-                unit={props.unit}/>)
+                unit={props.unit}
+                addFavoriteCityRequest={props.addFavoriteCityRequest}
+                deleteFavoriteCityRequest={props.deleteFavoriteCityRequest}
+            />)
         }
     }
 

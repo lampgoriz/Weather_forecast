@@ -4,23 +4,19 @@ import Search from "./Search";
 import {sendSearchCityRequest, updateSearchValue} from "../../Redux/search-reducer";
 import {getFavoritesCities} from "../../Redux/favoritesCities-selectors";
 import {
-    addFavoriteCityRequest, clearFavoritesCities,
+    addFavoriteCityRequest,
     deleteFavoriteCityRequest,
     setFavoritesCitiesRequest
 } from "../../Redux/favoritesCities-reducer";
 import {getSearchedCities, getSearchValue} from "../../Redux/search-selector";
-import {clearCitiesWeather} from "../../Redux/cityWeather-reducer";
 
 const SearchContainer = (props) => {
 
     useEffect(() => {
         props.setFavoritesCitiesRequest();
-
-        // return () => {
-        //     props.clearFavoritesCities();
-        //     props.clearCitiesWeather();
-        // };
     }, [props.favoritesCities.length])
+
+    // console.log(props.searchedCities);
 
     return (
         <Search
@@ -43,6 +39,5 @@ const mstp = (state) => ({
 
 export default connect(mstp, {
     sendSearchCityRequest, updateSearchValue, setFavoritesCitiesRequest,
-    addFavoriteCityRequest, deleteFavoriteCityRequest, clearFavoritesCities,
-    clearCitiesWeather
+    addFavoriteCityRequest, deleteFavoriteCityRequest,
 })(SearchContainer)

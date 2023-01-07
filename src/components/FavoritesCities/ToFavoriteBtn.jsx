@@ -1,19 +1,18 @@
 import React from "react";
+import {coordObjToString} from "../../tools/roundCoordinate";
 
 const ToFavoriteBtn = (props) => {
-    const cord = `${props.lat},${props.lon}`;
 
-    //FIX: different coordinate values come in search response and favoritesCities response
     const checkFav = () => {
-        let res;
-        props.favoritesCities.map(city => {
+        let res = false;
+        for (const city in props.favoritesCities) {
             if (res === true) {
                 return res
             }
-            if (city === cord) {
+            if (city === coordObjToString(props.coord.lat, props.coord.lon)) {
                 return res = true
-            } else return false
-        })
+            }
+        }
         return res;
     }
 
@@ -21,11 +20,11 @@ const ToFavoriteBtn = (props) => {
         <div>{
             checkFav()
                 ? <button
-                    onClick={() => props.deleteFavoriteCityRequest(cord)}>
+                    onClick={() => props.deleteFavoriteCityRequest(props.coord)}>
                     delete favorite
                 </button>
                 : <button
-                    onClick={() => props.addFavoriteCityRequest(cord)}>
+                    onClick={() => props.addFavoriteCityRequest(props.coord)}>
                     add favorite
                 </button>
         }

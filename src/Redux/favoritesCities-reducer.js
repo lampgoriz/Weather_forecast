@@ -1,21 +1,24 @@
 import {LocalStorageAPI} from "../api/api";
 import {createSlice} from "@reduxjs/toolkit";
+import {coordObjToString, roundCoordinate} from "../tools/roundCoordinate";
 
 // thunk creators
 export const addFavoriteCityRequest = (cityCoordinate) => (dispatch) => {
-    LocalStorageAPI.addFavorite(cityCoordinate);
-    dispatch(addFavorite(cityCoordinate));
+    const {lat, lon} = roundCoordinate(cityCoordinate);
+    LocalStorageAPI.addFavorite(coordObjToString(lat, lon));
+    dispatch(addFavorite(coordObjToString(lat, lon)));
 }
 export const deleteFavoriteCityRequest = (cityCoordinate) => (dispatch) => {
-    LocalStorageAPI.deleteFavorite(cityCoordinate);
-    dispatch(deleteFavorite(cityCoordinate));
+    const {lat, lon} = roundCoordinate(cityCoordinate);
+    LocalStorageAPI.deleteFavorite(coordObjToString(lat, lon));
+    dispatch(deleteFavorite(coordObjToString(lat, lon)));
 }
 export const setFavoritesCitiesRequest = () => (dispatch) => {
     dispatch(setFavoritesCities(LocalStorageAPI.getFavorites()));
 }
 
 const initialState = {
-    favoritesCities: []
+    favoritesCities: {}
 }
 
 const favoritesCitiesReducer = createSlice({
@@ -23,19 +26,16 @@ const favoritesCitiesReducer = createSlice({
     initialState,
     reducers: {
         addFavorite(state, action) {
-            state.favoritesCities.push(action.payload)
+            state.favoritesCities[action.payload] = action.payload
         },
         deleteFavorite(state, action) {
-            state.favoritesCities.filter(cord => cord !== action.payload)
+            delete state.favoritesCities[action.payload]
         },
         setFavoritesCities(state, action) {
             state.favoritesCities = action.payload
         },
-        clearFavoritesCities(state) {
-            state.favoritesCities = []
-        }
     }
 });
 
-export const {addFavorite, deleteFavorite, setFavoritesCities, clearFavoritesCities} = favoritesCitiesReducer.actions;
+export const {addFavorite, deleteFavorite, setFavoritesCities} = favoritesCitiesReducer.actions;
 export default favoritesCitiesReducer.reducer;

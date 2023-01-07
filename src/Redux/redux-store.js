@@ -6,7 +6,7 @@ import {configureStore} from "@reduxjs/toolkit";
 
 const store = configureStore({
     reducer:{
-        favoritesCities: favoritesCitiesReducer,
+        favorites: favoritesCitiesReducer,
         cityWeather: cityWeatherReducer,
         app: appReducer,
         search: searchReducer,

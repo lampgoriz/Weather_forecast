@@ -1,28 +1,24 @@
 import {connect} from "react-redux";
 import CityWeather from "./CityWeather";
-import React, {useEffect, useState} from "react";
-import {clearCitiesWeather, requestCityWeather} from "../../Redux/cityWeather-reducer";
+import React, {useEffect} from "react";
+import {requestCityWeather} from "../../Redux/cityWeather-reducer";
 import {Preloader} from "../../common/Preloader";
 import {getCityWeatherData} from "../../Redux/cityWeather-selectors";
 import {getIsFetching, getUnit} from "../../Redux/app-selectors";
 import {
     addFavoriteCityRequest,
-    clearFavoritesCities,
-    deleteFavoriteCityRequest
+    deleteFavoriteCityRequest, setFavoritesCitiesRequest
 } from "../../Redux/favoritesCities-reducer";
 import style from './CityWeather.module.css'
 import {getFavoritesCities} from "../../Redux/favoritesCities-selectors";
+import {roundCoordinate} from "../../tools/roundCoordinate";
 
 const CityWeatherContainer = (props) => {
 
     useEffect(() => {
+        props.setFavoritesCitiesRequest();
         const lat = '50.4333', lon = '30.5167';
         props.requestCityWeather({lat, lon});
-
-        // return () => {
-        //     props.clearFavoritesCities();
-        //     props.clearCitiesWeather();
-        // };
     }, [props.unit]);
 
 
@@ -43,6 +39,7 @@ const CityWeatherContainer = (props) => {
         pressure: props.weatherData.pressure,
         speed: props.weatherData.wind.speed,
         deg: props.weatherData.wind.deg,
+        coord: {lat: props.weatherData.coord.lat, lon: props.weatherData.coord.lon}
     }
 
 
@@ -68,6 +65,6 @@ const mstp = (state) => ({
 })
 
 export default connect(mstp, {
-    requestCityWeather, clearFavoritesCities, clearCitiesWeather,
-    addFavoriteCityRequest, deleteFavoriteCityRequest,
+    requestCityWeather, addFavoriteCityRequest, deleteFavoriteCityRequest,
+    setFavoritesCitiesRequest,
 })(CityWeatherContainer);

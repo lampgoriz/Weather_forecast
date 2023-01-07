@@ -20,8 +20,7 @@ const CityWeather = ({weatherData, unit, favoritesCities, addFavoriteCityRequest
             {weatherData.speed && <p>Wind speed: {weatherData.speed}</p>}
             {weatherData.deg && <p>Wind deg: {weatherData.deg}</p>}
             <ToFavoriteBtn
-                lat={weatherData.lat}
-                lon={weatherData.lon}
+                coord={weatherData.coord}
                 favoritesCities={favoritesCities}
                 deleteFavoriteCityRequest={deleteFavoriteCityRequest}
                 addFavoriteCityRequest={addFavoriteCityRequest}

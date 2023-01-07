@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {getFavoritesCities} from "../../Redux/favoritesCities-selectors";
 import {
-    addFavoriteCityRequest, clearFavoritesCities,
+    addFavoriteCityRequest,
     deleteFavoriteCityRequest,
     setFavoritesCitiesRequest
 } from "../../Redux/favoritesCities-reducer";
@@ -11,23 +11,20 @@ import {Preloader} from "../../common/Preloader";
 import FavoritesCities from "./FavoritesCities";
 import {getCitiesWeatherData} from "../../Redux/cityWeather-selectors";
 import {
-    clearCitiesWeather,
     requestCitiesWeather,
     setCitiesWeather,
 } from "../../Redux/cityWeather-reducer";
+import {coordStringToObj} from "../../tools/roundCoordinate";
 
 const FavoritesCitiesContainer = (props) => {
 
     useEffect(() => {
         props.setFavoritesCitiesRequest();
-        props.favoritesCities.map(c => {
-            props.requestCitiesWeather(c);
-        });
-        // return () => {
-        //     props.clearFavoritesCities();
-        //     props.clearCitiesWeather();
-        // };
-    }, [props.favoritesCities.length, props.unit]);
+
+        for (const key in props.favoritesCities) {
+            props.requestCitiesWeather(coordStringToObj(key));
+        }
+    }, [Object.keys(props.favoritesCities).length, props.unit]);
 
     if (props.isFetching) {
         return <Preloader/>
@@ -52,6 +49,5 @@ const mstp = (state) => ({
 export default connect(mstp, {
     setFavoritesCitiesRequest,
     deleteFavoriteCityRequest, addFavoriteCityRequest, requestCitiesWeather,
-    clearFavoritesCities, clearCitiesWeather, setCitiesWeather,
+    setCitiesWeather,
 })(FavoritesCitiesContainer);
-

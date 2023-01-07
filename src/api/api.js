@@ -29,28 +29,25 @@ export const LocalStorageAPI = {
     addFavorite: (cityCoordinate) => {
         let storage = localStorage.getItem('favCities')
             ? JSON.parse(localStorage.getItem('favCities'))
-            : [];
-        if (storage.length === 0) {
-            storage.push(cityCoordinate);
-        } else {
-            if (storage.find(cord => cord !== cityCoordinate)) {
-                storage.push(cityCoordinate);
-            }
+            : {};
+
+        if (!storage[cityCoordinate]) {
+            storage[cityCoordinate] = cityCoordinate;
         }
         localStorage.setItem('favCities', JSON.stringify(storage));
     },
 
     deleteFavorite: (cityCoordinate) => {
         let storage = JSON.parse(localStorage.getItem('favCities'));
-        let filtered = storage.filter(cord => cord !== cityCoordinate);
-        localStorage.setItem('favCities', JSON.stringify(filtered));
+        delete storage[cityCoordinate];
+        localStorage.setItem('favCities', JSON.stringify(storage));
     },
 
     getFavorites: () => {
         if (localStorage.getItem('favCities')) {
             return JSON.parse(localStorage.getItem('favCities'));
         }
-        return [];
+        return {};
     },
 
     setUnit: (unit) => {

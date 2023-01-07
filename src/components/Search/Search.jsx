@@ -1,5 +1,6 @@
 import React from "react";
 import SearchCityItem from "./SearchCityItem";
+import {roundCoordinate} from "../../tools/roundCoordinate";
 
 const Search = (props) => {
 
@@ -11,8 +12,9 @@ const Search = (props) => {
                 name={r.name}
                 country={r.country}
                 state={r.state}
-                lat={r.lat}
-                lon={r.lon}
+                coord={roundCoordinate({lat: r.lat, lon: r.lon})}
+                // lat={r.lat}
+                // lon={r.lon}
                 favoritesCities={props.favoritesCities}
                 addFavoriteCityRequest={props.addFavoriteCityRequest}
                 deleteFavoriteCityRequest={props.deleteFavoriteCityRequest}
