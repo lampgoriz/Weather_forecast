@@ -12,7 +12,7 @@ import FavoritesCities from "./FavoritesCities";
 import {getCitiesWeatherData} from "../../Redux/cityWeather-selectors";
 import {
     requestCitiesWeather,
-    setCitiesWeather,
+    // setCitiesWeather,
 } from "../../Redux/cityWeather-reducer";
 import {coordStringToObj} from "../../tools/roundCoordinate";
 
@@ -26,7 +26,7 @@ const FavoritesCitiesContainer = (props) => {
         }
     }, [Object.keys(props.favoritesCities).length, props.unit]);
 
-    if (props.isFetching) {
+    if (props.isFetching || !props.weatherData) {
         return <Preloader/>
     }
 
@@ -34,8 +34,6 @@ const FavoritesCitiesContainer = (props) => {
         weatherData={props.weatherData}
         unit={props.unit}
         favoritesCities={props.favoritesCities}
-        addFavoriteCityRequest={props.addFavoriteCityRequest}
-        deleteFavoriteCityRequest={props.deleteFavoriteCityRequest}
     />
 }
 
@@ -47,7 +45,6 @@ const mstp = (state) => ({
 })
 
 export default connect(mstp, {
-    setFavoritesCitiesRequest,
-    deleteFavoriteCityRequest, addFavoriteCityRequest, requestCitiesWeather,
-    setCitiesWeather,
+    setFavoritesCitiesRequest, requestCitiesWeather,
+    // setCitiesWeather,
 })(FavoritesCitiesContainer);

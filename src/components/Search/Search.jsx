@@ -1,6 +1,7 @@
 import React from "react";
 import SearchCityItem from "./SearchCityItem";
 import {roundCoordinate} from "../../tools/roundCoordinate";
+import {requestCityWeather} from "../../Redux/cityWeather-reducer";
 
 const Search = (props) => {
 
@@ -13,11 +14,8 @@ const Search = (props) => {
                 country={r.country}
                 state={r.state}
                 coord={roundCoordinate({lat: r.lat, lon: r.lon})}
-                // lat={r.lat}
-                // lon={r.lon}
                 favoritesCities={props.favoritesCities}
-                addFavoriteCityRequest={props.addFavoriteCityRequest}
-                deleteFavoriteCityRequest={props.deleteFavoriteCityRequest}
+                requestCityWeather={props.requestCityWeather}
             />
         })
     }

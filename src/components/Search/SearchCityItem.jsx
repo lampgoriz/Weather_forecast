@@ -1,19 +1,20 @@
 import React from "react";
 import ToFavoriteBtn from "../FavoritesCities/ToFavoriteBtn";
+import {NavLink} from "react-router-dom";
+import ToFavoriteBtnContainer from "../FavoritesCities/ToFavoriteBtnContainer";
+import {ShowDetailBtn} from "../../common/ShowDetailBtn";
 
 const SearchCityItem = (props) => {
+
     return (
         <li key={props.lat + props.lon}>
             <p>{props.name}, {props.country}, {props.state}</p>
-            <ToFavoriteBtn
+
+            <ToFavoriteBtnContainer
                 coord={props.coord}
-                // lat={props.lat}
-                // lon={props.lon}
                 favoritesCities={props.favoritesCities}
-                deleteFavoriteCityRequest={props.deleteFavoriteCityRequest}
-                addFavoriteCityRequest={props.addFavoriteCityRequest}
             />
-            <button>show detail</button>
+            <ShowDetailBtn lat={props.coord.lat} lon={props.coord.lon}/>
         </li>
     )
 }

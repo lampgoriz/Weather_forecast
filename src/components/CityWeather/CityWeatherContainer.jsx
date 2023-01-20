@@ -3,7 +3,7 @@ import CityWeather from "./CityWeather";
 import React, {useEffect} from "react";
 import {requestCityWeather} from "../../Redux/cityWeather-reducer";
 import {Preloader} from "../../common/Preloader";
-import {getCityWeatherData} from "../../Redux/cityWeather-selectors";
+import {getCityToFind, getCityWeatherData} from "../../Redux/cityWeather-selectors";
 import {getIsFetching, getUnit} from "../../Redux/app-selectors";
 import {
     addFavoriteCityRequest,
@@ -15,10 +15,12 @@ import {roundCoordinate} from "../../tools/roundCoordinate";
 
 const CityWeatherContainer = (props) => {
 
+    // console.log(props)
+
     useEffect(() => {
         props.setFavoritesCitiesRequest();
-        const lat = '50.4333', lon = '30.5167';
-        props.requestCityWeather({lat, lon});
+        // const lat = '50.4333', lon = '30.5167';
+        props.requestCityWeather(props.cityToFind);
     }, [props.unit]);
 
 
@@ -53,7 +55,6 @@ const CityWeatherContainer = (props) => {
                 favoritesCities={props.favoritesCities}
             />
         </div>
-
     );
 }
 
@@ -62,6 +63,7 @@ const mstp = (state) => ({
     weatherData: getCityWeatherData(state),
     unit: getUnit(state),
     favoritesCities: getFavoritesCities(state),
+    cityToFind: getCityToFind(state),
 })
 
 export default connect(mstp, {

@@ -1,9 +1,10 @@
 import React from "react";
 import style from './CityWeather.module.css'
 import cn from 'classnames'
-import ToFavoriteBtn from "../FavoritesCities/ToFavoriteBtn";
+import ToFavoriteBtnContainer from "../FavoritesCities/ToFavoriteBtnContainer";
+import ShowDetailBtnContainer from "../../common/ShowDetailBtnContainer";
 
-const CityWeather = ({weatherData, unit, favoritesCities, addFavoriteCityRequest, deleteFavoriteCityRequest}) => {
+const CityWeather = ({weatherData, unit, favoritesCities}) => {
 
     const roundTemperature = (t) => Math.round(t);
 
@@ -19,12 +20,11 @@ const CityWeather = ({weatherData, unit, favoritesCities, addFavoriteCityRequest
             {weatherData.pressure && <p>Pressure: {weatherData.pressure}</p>}
             {weatherData.speed && <p>Wind speed: {weatherData.speed}</p>}
             {weatherData.deg && <p>Wind deg: {weatherData.deg}</p>}
-            <ToFavoriteBtn
+            <ToFavoriteBtnContainer
                 coord={weatherData.coord}
                 favoritesCities={favoritesCities}
-                deleteFavoriteCityRequest={deleteFavoriteCityRequest}
-                addFavoriteCityRequest={addFavoriteCityRequest}
             />
+            {!weatherData.visibility && <ShowDetailBtnContainer lat={weatherData.coord.lat} lon={weatherData.coord.lon}/>}
         </div>
     );
 }

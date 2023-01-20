@@ -3,7 +3,7 @@ import {coordObjToString} from "../../tools/roundCoordinate";
 
 const ToFavoriteBtn = (props) => {
 
-    const checkFav = () => {
+     const checkFav = () => {
         let res = false;
         for (const city in props.favoritesCities) {
             if (res === true) {

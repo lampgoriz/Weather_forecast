@@ -1,6 +1,7 @@
 import {WeatherAPI} from "../api/api";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {coordObjToString, roundCoordinate} from "../tools/roundCoordinate";
+import {addIsFetching, deleteIsFetching} from "./app-reducer";
 
 //thunk creators
 export const requestCityWeather = createAsyncThunk(
@@ -19,6 +20,7 @@ export const requestCitiesWeather = createAsyncThunk(
 
 
 const initialState = {
+    cityToFind: null,
     city: null,
     cities: {}
 }
@@ -26,7 +28,11 @@ const initialState = {
 const cityWeatherReducer = createSlice({
     name: 'favoritesCities',
     initialState,
-    reducers: {},
+    reducers: {
+        updateCityToFind: (state, action) => {
+            state.cityToFind = action.payload
+        }
+    },
     extraReducers: {
         [requestCityWeather.fulfilled]: (state, action) => {
             state.city = action.payload;
@@ -40,7 +46,7 @@ const cityWeatherReducer = createSlice({
     }
 });
 
-export const {setCitiesWeather} = cityWeatherReducer.actions;
+export const {updateCityToFind} = cityWeatherReducer.actions;
 export default cityWeatherReducer.reducer;
 
 
