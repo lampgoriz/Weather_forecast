@@ -1,19 +1,12 @@
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import {getFavoritesCities} from "../../Redux/favoritesCities-selectors";
-import {
-    addFavoriteCityRequest,
-    deleteFavoriteCityRequest,
-    setFavoritesCitiesRequest
-} from "../../Redux/favoritesCities-reducer";
+import {setFavoritesCitiesRequest} from "../../Redux/favoritesCities-reducer";
 import {getIsFetching, getUnit} from "../../Redux/app-selectors";
 import {Preloader} from "../../common/Preloader";
 import FavoritesCities from "./FavoritesCities";
 import {getCitiesWeatherData} from "../../Redux/cityWeather-selectors";
-import {
-    requestCitiesWeather,
-    // setCitiesWeather,
-} from "../../Redux/cityWeather-reducer";
+import {requestCitiesWeather} from "../../Redux/cityWeather-reducer";
 import {coordStringToObj} from "../../tools/roundCoordinate";
 
 const FavoritesCitiesContainer = (props) => {
@@ -33,7 +26,6 @@ const FavoritesCitiesContainer = (props) => {
     return <FavoritesCities
         weatherData={props.weatherData}
         unit={props.unit}
-        favoritesCities={props.favoritesCities}
     />
 }
 
@@ -46,5 +38,4 @@ const mstp = (state) => ({
 
 export default connect(mstp, {
     setFavoritesCitiesRequest, requestCitiesWeather,
-    // setCitiesWeather,
 })(FavoritesCitiesContainer);

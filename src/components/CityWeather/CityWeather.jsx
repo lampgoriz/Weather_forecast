@@ -4,7 +4,7 @@ import cn from 'classnames'
 import ToFavoriteBtnContainer from "../FavoritesCities/ToFavoriteBtnContainer";
 import ShowDetailBtnContainer from "../../common/ShowDetailBtnContainer";
 
-const CityWeather = ({weatherData, unit, favoritesCities}) => {
+const CityWeather = ({weatherData, unit}) => {
 
     const roundTemperature = (t) => Math.round(t);
 
@@ -22,7 +22,6 @@ const CityWeather = ({weatherData, unit, favoritesCities}) => {
             {weatherData.deg && <p>Wind deg: {weatherData.deg}</p>}
             <ToFavoriteBtnContainer
                 coord={weatherData.coord}
-                favoritesCities={favoritesCities}
             />
             {!weatherData.visibility && <ShowDetailBtnContainer lat={weatherData.coord.lat} lon={weatherData.coord.lon}/>}
         </div>

@@ -24,7 +24,6 @@ const SearchContainer = (props) => {
             searchValue={props.searchValue}
             sendSearchCityRequest={props.sendSearchCityRequest}
             updateSearchValue={props.updateSearchValue}
-            favoritesCities={props.favoritesCities}
             requestCityWeather={props.requestCityWeather}
         />
     )

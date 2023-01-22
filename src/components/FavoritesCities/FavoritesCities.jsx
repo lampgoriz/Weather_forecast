@@ -4,10 +4,11 @@ import style from './favoriteCities.module.css'
 
 const FavoritesCities = (props) => {
 
-    let cities = [];
+    const cities = [];
     if (props.weatherData) {
         for (const city in props.weatherData) {
             let key = props.weatherData[city];
+
             let weatherData = {
                 name: key.name,
                 country: key.sys.country,
@@ -22,7 +23,6 @@ const FavoritesCities = (props) => {
             cities.push(<CityWeather
                 key={key.id}
                 weatherData={weatherData}
-                favoritesCities={props.favoritesCities}
                 unit={props.unit}
             />)
         }
@@ -30,7 +30,7 @@ const FavoritesCities = (props) => {
 
     return (
         <div className={style.favorites_cities}>
-            {cities || 'NO FAVORITES CITIES'}
+            {cities.length >= 1 ? cities : <h3>NO FAVORITES CITIES</h3>}
         </div>
     );
 }

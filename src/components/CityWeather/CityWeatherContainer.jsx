@@ -10,20 +10,17 @@ import {
     deleteFavoriteCityRequest, setFavoritesCitiesRequest
 } from "../../Redux/favoritesCities-reducer";
 import style from './CityWeather.module.css'
-import {getFavoritesCities} from "../../Redux/favoritesCities-selectors";
-import {roundCoordinate} from "../../tools/roundCoordinate";
 
 const CityWeatherContainer = (props) => {
 
-    // console.log(props)
-
     useEffect(() => {
         props.setFavoritesCitiesRequest();
-        // const lat = '50.4333', lon = '30.5167';
         props.requestCityWeather(props.cityToFind);
     }, [props.unit]);
 
-
+    if(!props.cityToFind){
+        return <h3>Chose city from favorites or search</h3>
+    }
     if (props.isFetching || !props.weatherData) {
         return <Preloader/>
     }
@@ -62,7 +59,6 @@ const mstp = (state) => ({
     isFetching: getIsFetching(state),
     weatherData: getCityWeatherData(state),
     unit: getUnit(state),
-    favoritesCities: getFavoritesCities(state),
     cityToFind: getCityToFind(state),
 })
 

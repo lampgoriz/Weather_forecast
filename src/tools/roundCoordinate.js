@@ -1,6 +1,6 @@
 export const roundCoordinate = ({lat, lon}) => {
-    lat = Math.round(lat * 1000) / 1000;
-    lon = Math.round(lon * 1000) / 1000;
+    lat = Math.round(lat * 100) / 100;
+    lon = Math.round(lon * 100) / 100;
     return {lat, lon};
 }
 

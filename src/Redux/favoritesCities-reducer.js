@@ -2,10 +2,12 @@ import {LocalStorageAPI} from "../api/api";
 import {createSlice} from "@reduxjs/toolkit";
 import {coordObjToString, roundCoordinate} from "../tools/roundCoordinate";
 import {addIsFetching, deleteIsFetching} from "./app-reducer";
+import {deleteFavCity} from "./cityWeather-reducer";
 
 // thunk creators
 export const addFavoriteCityRequest = (cityCoordinate) => (dispatch) => {
     dispatch(addIsFetching());
+    // const {lat, lon} = cityCoordinate;
     const {lat, lon} = roundCoordinate(cityCoordinate);
     LocalStorageAPI.addFavorite(coordObjToString(lat, lon));
     dispatch(addFavorite(coordObjToString(lat, lon)));
@@ -13,9 +15,11 @@ export const addFavoriteCityRequest = (cityCoordinate) => (dispatch) => {
 }
 export const deleteFavoriteCityRequest = (cityCoordinate) => (dispatch) => {
     dispatch(addIsFetching());
+    // const {lat, lon} = cityCoordinate;
     const {lat, lon} = roundCoordinate(cityCoordinate);
     LocalStorageAPI.deleteFavorite(coordObjToString(lat, lon));
     dispatch(deleteFavorite(coordObjToString(lat, lon)));
+    dispatch(deleteFavCity(coordObjToString(lat, lon)));
     dispatch(deleteIsFetching());
 }
 export const setFavoritesCitiesRequest = () => (dispatch) => {
